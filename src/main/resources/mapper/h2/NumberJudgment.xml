@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.repository.NumberJudgmentMapper">
+
+<resultMap type="com.example.demo.domain.model.NumberEnthity" id="number">
+  <id column="id" property="id"/>
+  <result column="input_number" property="inputNumber" />
+  <result column="classification_number" property="classificationNumber" />
+</resultMap>
+
+<!-- 数字登録 -->
+<insert id="insertOne">
+
+INSERT INTO number_judgment(
+input_number,
+classification_number
+) VALUES (
+#{inputNumber},
+#{classificationNumber}
+)
+
+</insert>
+
+</mapper>
