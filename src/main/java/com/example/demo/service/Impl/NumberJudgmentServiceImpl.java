@@ -36,6 +36,17 @@ public class NumberJudgmentServiceImpl implements NumberJudgmentService {
 		return mapper.lastTimeNumber();
 	}
 	
+	//1~1000の数字であるか判定
+    public boolean JudgmentNumberSize(NumberForm form) {
+		
+		
+		if(form.getInputNumber() < 1 || form.getInputNumber() > 1000) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	//偶数、奇数判定
 	public boolean JudgmentEvenorOdd(NumberForm form) {
 		

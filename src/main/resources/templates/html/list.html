@@ -13,10 +13,15 @@
   <div class="form-group">
       <label for="inputNumber" class="form-label">数字入力</label>
       <input class="form-control" type="text" style="text-align:center" th:field="*{inputNumber}"/>
+      <div class="sizeCheck" th:text="${sizeCheck}"></div>
       
   </div>
   <input type="submit" value="判定" class="btn btn-primary" />
   </form>
+  
+ <!-- 再判定処理 --> 
+  
+  <form action="/NumberJudgment" method="post" th:object="${numberList}">
   
   <h1>入力数値履歴</h1>
     <table class="table table-bordered" >
@@ -30,11 +35,19 @@
 	  <tbody>
 	  <tr  th:each="list : ${numberList}">
 	      <td th:text="${list.id}"></td>
-	      <td th:text="${list.inputNumber}"></td>
+
+	      <td>
+	        <a th:href="@{/NumberJudgment}" th:text="${list.inputNumber}"></a>
+	      </td>
+	      
 	      <td th:text="${list.classificationNumber}"></td>
 	  </tr>
 	  </tbody>
 	  </table>
+  
+  </form>
+  
+  
   
 </body>
 </html>
