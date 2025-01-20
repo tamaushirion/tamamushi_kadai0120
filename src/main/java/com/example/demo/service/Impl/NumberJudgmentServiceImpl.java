@@ -1,5 +1,7 @@
 package com.example.demo.service.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,20 @@ public class NumberJudgmentServiceImpl implements NumberJudgmentService {
 	public void insertOne(NumberEnthity number) {
 		// TODO 自動生成されたメソッド・スタブ
 		mapper.insertOne(number);
+	}
+	
+	//5件履歴取得
+	@Override
+	public List<NumberEnthity> find5Number() {
+		// TODO 自動生成されたメソッド・スタブ
+		return mapper.find5Number();
+	}
+	
+	//過去入力数値
+	@Override
+	public NumberEnthity lastTimeNumber() {
+		// TODO 自動生成されたメソッド・スタブ
+		return mapper.lastTimeNumber();
 	}
 	
 	//偶数、奇数判定
@@ -65,6 +81,7 @@ public class NumberJudgmentServiceImpl implements NumberJudgmentService {
 		// ２未満は完全数ではない
 		if ( 2 > form.getInputNumber() ) {
 			form.setClassificationNumber("完全数ではない");
+			return false;
 		}
 
 		// 和を計算
@@ -76,7 +93,6 @@ public class NumberJudgmentServiceImpl implements NumberJudgmentService {
 		}
 
 		// 判定
-		// 和sumと元の値nが不一致なので完全数である
 		if ( sum == form.getInputNumber() ) {
 			form.setClassificationNumber("完全数");
 			return true;
@@ -100,15 +116,15 @@ public class NumberJudgmentServiceImpl implements NumberJudgmentService {
 				formNumberSum += i;
 		}
 		
-		//1回前の入力値の約数の和
-		int lastTimeNumberSum = 0;
-		for ( int i = 1; i <= lastTimeNumber / 2; i ++ )
-		{
-			if ( 0 == ( lastTimeNumber % i ) )
-				lastTimeNumberSum += i;
-		}
+//		//1回前の入力値の約数の和
+//		int lastTimeNumberSum = 0;
+//		for ( int i = 1; i <= lastTimeNumber / 2; i ++ )
+//		{
+//			if ( 0 == ( lastTimeNumber % i ) )
+//				lastTimeNumberSum += i;
+//		}
 		
-		if(formNumberSum == lastTimeNumberSum) {
+		if(formNumberSum == lastTimeNumber) {
 			form.setClassificationNumber("友愛数");
 			return true;
 		} else {

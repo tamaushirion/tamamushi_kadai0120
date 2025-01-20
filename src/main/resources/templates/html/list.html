@@ -18,6 +18,23 @@
   <input type="submit" value="判定" class="btn btn-primary" />
   </form>
   
+  <h1>入力数値履歴</h1>
+    <table class="table table-bordered" >
+	  <thead>
+	  <tr>
+	    <th>ID</th>
+	    <th>入力数値</th>
+	    <th>数値分類</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr  th:each="list : ${numberList}">
+	      <td th:text="${list.id}"></td>
+	      <td th:text="${list.inputNumber}"></td>
+	      <td th:text="${list.classificationNumber}"></td>
+	  </tr>
+	  </tbody>
+	  </table>
   
 </body>
 </html>
