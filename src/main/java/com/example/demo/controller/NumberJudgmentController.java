@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +25,9 @@ public class NumberJudgmentController {
 	@GetMapping("/NumberJudgment")
 	public String getNumberJudgmentList(NumberForm form, Model model) {
 		
+		List<NumberEnthity> numberList = service.find5Number();
 		
+		model.addAttribute("numberList", numberList);
 		
 		return "html/list";
 		
@@ -35,7 +39,9 @@ public class NumberJudgmentController {
 	//数値チェック入れていく
 	
 	//友愛数の判定
-	if(service.JudgmentFraternalNumber(form, 1)) {
+	if(service.JudgmentFraternalNumber(form, service.lastTimeNumber().getInputNumber())) {
+		
+		//2回目以降の判定
 		
 		NumberEnthity number = modelMapper.map(form, NumberEnthity.class);
 		service.insertOne(number);

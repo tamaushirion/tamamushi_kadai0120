@@ -22,4 +22,19 @@ classification_number
 
 </insert>
 
+<!-- ５件分の履歴表示 -->
+<select id="find5Number" resultType="com.example.demo.domain.model.NumberEnthity">
+
+SELECT * FROM number_judgment ORDER BY id DESC LIMIT 5;
+
+</select>
+
+<!-- 前回入力数値取得 -->
+<select id="lastTimeNumber" resultType="com.example.demo.domain.model.NumberEnthity">
+
+SELECT * FROM number_judgment ORDER BY id DESC LIMIT 1;
+
+</select>
+
+
 </mapper>
