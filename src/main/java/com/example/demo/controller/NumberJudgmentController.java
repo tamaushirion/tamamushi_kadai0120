@@ -25,9 +25,11 @@ public class NumberJudgmentController {
 	@GetMapping("/NumberJudgment")
 	public String getNumberJudgmentList(NumberForm form, Model model) {
 		
-		List<NumberEnthity> numberList = service.find5Number();
+		List<NumberEnthity> enthityNumberList = service.find5Number();
 		
-		model.addAttribute("numberList", numberList);
+		//NumberForm numberList = modelMapper.map(enthityNumberList, form.getClass());
+		
+		model.addAttribute("numberList", enthityNumberList);
 		
 		return "html/list";
 		
@@ -36,7 +38,11 @@ public class NumberJudgmentController {
 	@PostMapping("/NumberJudgment")
     public String postNumberJudgmentList(NumberForm form, Model model) {
 	
-	//数値チェック入れていく
+	//数値が1~1000の範囲ないか
+	if(!service.JudgmentNumberSize(form)) {
+		model.addAttribute("sizeCheck", "1~1000の範囲内で入力してください");
+		return getNumberJudgmentList(form, model);
+	}
 	
 	//友愛数の判定
 	if(service.JudgmentFraternalNumber(form, service.lastTimeNumber().getInputNumber())) {
