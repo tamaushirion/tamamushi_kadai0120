@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/list.css}">
+<title>数字判定課題</title>
+</head>
+<body>
+<!-- 入力フォーム -->
+  <form action="/NumberJudgment" method="post" th:object="${numberForm}">
+  <h1>TodoAddForm</h1>
+  <div class="form-group">
+      <label for="inputNumber" class="form-label">数字入力</label>
+      <input class="form-control" type="text" style="text-align:center" th:field="*{inputNumber}"/>
+      
+  </div>
+  <input type="submit" value="判定" class="btn btn-primary" />
+  </form>
+  
+  
+</body>
+</html>
