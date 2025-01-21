@@ -2,6 +2,7 @@ package com.example.demo.service.Impl;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ public class NumberJudgmentServiceImpl implements NumberJudgmentService {
 
 	@Autowired
 	private NumberJudgmentMapper mapper;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Override
 	public void insertOne(NumberEnthity number) {
@@ -47,15 +51,16 @@ public class NumberJudgmentServiceImpl implements NumberJudgmentService {
 		}
 	}
 	
+    
 	//偶数、奇数判定
 	public boolean JudgmentEvenorOdd(NumberForm form) {
 		
 		//偶数
 		if(form.getInputNumber() % 2 == 0) {
-			form.setClassificationNumber("偶数");
+			
 			return true;
 		} else {
-			form.setClassificationNumber("奇数");
+			
 			return false;
 		}
 		
@@ -66,22 +71,28 @@ public class NumberJudgmentServiceImpl implements NumberJudgmentService {
 	public boolean JudgmentPrimeNumber(NumberForm form) {
 		
 		if (form.getInputNumber() < 2) {
-			form.setClassificationNumber("素数ではない");
+			
 			return false;
 	    }
+		
+		if (form.getInputNumber() == 2) {
+	    	
+	    	return true;
+	    }
+		
 	    if (form.getInputNumber() % 2 == 0) { // 偶数は先にリターン
-	    	form.setClassificationNumber("素数ではない");
+	    	
 	    	return false;
 	    }
 
 	    for (int i = 3; i <= Math.sqrt(form.getInputNumber()); i+=2) {
 	      if (form.getInputNumber() % i == 0) {
-	    	  form.setClassificationNumber("素数ではない");
+	    	  
 	    	  return false;
 	      }
 	    }
 	    
-	    form.setClassificationNumber("素数");
+	    
 	    
 	    return true;
 	}
@@ -91,7 +102,7 @@ public class NumberJudgmentServiceImpl implements NumberJudgmentService {
 		
 		// ２未満は完全数ではない
 		if ( 2 > form.getInputNumber() ) {
-			form.setClassificationNumber("完全数ではない");
+			
 			return false;
 		}
 
@@ -105,11 +116,11 @@ public class NumberJudgmentServiceImpl implements NumberJudgmentService {
 
 		// 判定
 		if ( sum == form.getInputNumber() ) {
-			form.setClassificationNumber("完全数");
+			
 			return true;
 		} else {
 			// 和sumと元の値nが不一致なので完全数ではない
-			form.setClassificationNumber("完全数ではない");
+			
 			return false;
 		}
 		
@@ -127,22 +138,43 @@ public class NumberJudgmentServiceImpl implements NumberJudgmentService {
 				formNumberSum += i;
 		}
 		
-//		//1回前の入力値の約数の和
-//		int lastTimeNumberSum = 0;
-//		for ( int i = 1; i <= lastTimeNumber / 2; i ++ )
-//		{
-//			if ( 0 == ( lastTimeNumber % i ) )
-//				lastTimeNumberSum += i;
-//		}
-		
 		if(formNumberSum == lastTimeNumber) {
-			form.setClassificationNumber("友愛数");
+			
 			return true;
 		} else {
-			form.setClassificationNumber("友愛数ではない");
+			
 			return false;
 		}
 		
 	}
 	
+    public NumberEnthity Judgment(NumberForm form) {
+    	
+    	NumberEnthity number = new NumberEnthity();
+    	
+    	if(JudgmentFraternalNumber(form, lastTimeNumber().getInputNumber())) {
+    		form.setClassificationNumber("友愛数");
+    		form.setColor("gray");
+    		number = modelMapper.map(form, NumberEnthity.class);
+    	} else if(JudgmentPerfectNumber(form)) {
+    		form.setClassificationNumber("完全数");
+    		form.setColor("gold");
+    		number = modelMapper.map(form, NumberEnthity.class);
+    	} else if(JudgmentPrimeNumber(form)) {
+    		form.setClassificationNumber("素数");
+    		form.setColor("green");
+    	    number = modelMapper.map(form, NumberEnthity.class);
+    	} else if(JudgmentEvenorOdd(form)) {
+    		form.setClassificationNumber("偶数");
+    		form.setColor("blue");
+    		number = modelMapper.map(form, NumberEnthity.class);
+    	} else {
+    		form.setClassificationNumber("奇数");
+    		form.setColor("red");
+    		number = modelMapper.map(form, NumberEnthity.class);
+    	}
+    	
+		return number;
+    	
+    }
 }

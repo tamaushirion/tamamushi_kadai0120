@@ -7,6 +7,7 @@
   <id column="id" property="id"/>
   <result column="input_number" property="inputNumber" />
   <result column="classification_number" property="classificationNumber" />
+  <result column="color" property="color" />
 </resultMap>
 
 <!-- 数字登録 -->
@@ -14,10 +15,12 @@
 
 INSERT INTO number_judgment(
 input_number,
-classification_number
+classification_number,
+color
 ) VALUES (
 #{inputNumber},
-#{classificationNumber}
+#{classificationNumber},
+#{color}
 )
 
 </insert>
