@@ -8,4 +8,5 @@ public class NumberEnthity {
 	private Integer id;
 	private Integer inputNumber;
 	private String classificationNumber;
+	private String color;
 }

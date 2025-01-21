@@ -2,52 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/list.css}">
 <title>数字判定課題</title>
 </head>
 <body>
-<!-- 入力フォーム -->
-  <form action="/NumberJudgment" method="post" th:object="${numberForm}">
-  <h1>TodoAddForm</h1>
-  <div class="form-group">
-      <label for="inputNumber" class="form-label">数字入力</label>
-      <input class="form-control" type="text" style="text-align:center" th:field="*{inputNumber}"/>
-      <div class="sizeCheck" th:text="${sizeCheck}"></div>
-      
-  </div>
-  <input type="submit" value="判定" class="btn btn-primary" />
-  </form>
-  
- <!-- 再判定処理 --> 
-  
-  <form action="/NumberJudgment" method="post" th:object="${numberList}">
-  
-  <h1>入力数値履歴</h1>
-    <table class="table table-bordered" >
-	  <thead>
-	  <tr>
-	    <th>ID</th>
-	    <th>入力数値</th>
-	    <th>数値分類</th>
-	  </tr>
-	  </thead>
-	  <tbody>
-	  <tr  th:each="list : ${numberList}">
-	      <td th:text="${list.id}"></td>
+	<!-- 入力フォーム -->
+	<form action="/NumberJudgment" method="post" th:object="${numberForm}">
+		<h1>数字判定課題</h1>
+		<div class="form-group">
+			<label for="inputNumber" class="form-label">数字入力</label> <input
+				class="form-control" type="text" style="text-align: center"
+				th:field="*{inputNumber}" />
+			<div class="sizeCheck" th:text="${sizeCheck}"></div>
 
-	      <td>
-	        <a th:href="@{/NumberJudgment}" th:text="${list.inputNumber}"></a>
-	      </td>
-	      
-	      <td th:text="${list.classificationNumber}"></td>
-	  </tr>
-	  </tbody>
-	  </table>
-  
-  </form>
-  
-  
-  
+		</div>
+		<input type="submit" value="判定" class="btn btn-primary" />
+	</form>
+
+	<!-- 再判定処理 -->
+
+
+
+	<h1>入力数値履歴</h1>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>入力数値</th>
+				<th>数値分類</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="list : ${numberList}" th:object="${numberList}">
+				<td th:text="${list.id}"></td>
+
+				<td>
+					<form th:action="@{/NumberJudgment}" method="post"
+						th:object="${numberList}">
+						<input type="hidden" name="inputNumber"
+							th:value="${list.inputNumber}" />
+						<button type="submit" th:value="${list.inputNumber}" th:style="'color:' + ${list.color}">[[${list.inputNumber}]]</button>
+					</form>
+				</td>
+
+				<td th:text="${list.classificationNumber}"></td>
+			</tr>
+		</tbody>
+	</table>
+
+
+
+
+
 </body>
 </html>
